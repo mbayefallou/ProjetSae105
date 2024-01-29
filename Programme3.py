@@ -1,5 +1,6 @@
 import csv
 import webbrowser
+import matplotlib.pyplot as plt
 
 # Ouvrir le fichier "extrait.txt"
 with open("DumpFile.txt", "r") as fichier:
@@ -83,34 +84,53 @@ seqcounter = [seqcounter]
 ackcounter = [ackcounter]
 wincounter = [wincounter]
 
+# Créer un histogramme pour les drapeaux
+plt.figure(figsize=(10, 5))
+plt.bar(['[P.]', '[S]', '[.]'], [flagcounterP[0], flagcounterS[0], flagcounter[0]], color=['red', 'yellow','green'])
+plt.xlabel('Drapeaux')
+plt.xlabel('Drapeaux')
+plt.ylabel('Compte')
+plt.title('Histogramme des drapeaux')
+plt.savefig('histogramme_drapeaux.png')
+plt.close()
+
+# Créer un histogramme pour les requêtes et les réponses
+plt.figure(figsize=(10, 5))
+plt.bar(['Requête', 'Réponse'], [requestcounter[0], replycounter[0]], color=['red', 'yellow'])
+plt.xlabel('Type')
+plt.ylabel('Compte')
+plt.title('Histogramme des requêtes et réponses')
+plt.savefig('histogramme_requetes_reponses.png')
+plt.close()
+
 # Contenu de la page Markdown
 markdown_content = f'''
 # Traitement des données
 
 ## Serigne Fallou Mbaye - Projet SAE 15
 
-Sur cette page web, nous vous avons  les informations et données pertinentes trouvées dans le fichier à traiter.
+Sur cette page web, nous vous présentons les informations et données pertinentes trouvées dans le fichier à traiter.
 
 ### Nombre total de trames échangées
 {framecounter[0]}
 
 ### Drapeaux (Flags)
-- Nombre de flags [P] (PUSH): {flagcounterP[0]}
-- Nombre de flags [S] (SYN): {flagcounterS[0]}
-- Nombre de flag [.] (ACK): {flagcounter[0]}
+- Nombre de drapeaux [P] (PUSH) : {flagcounterP[0]}
+- Nombre de drapeaux [S] (SYN) : {flagcounterS[0]}
+- Nombre de drapeaux [.] (ACK) : {flagcounter[0]}
 
 ![Histogramme des drapeaux](histogramme_drapeaux.png)
 
 ### Nombre de requêtes et réponses
-- Request: {requestcounter[0]}
-- Reply: {replycounter[0]}
+- Requête : {requestcounter[0]}
+- Réponse : {replycounter[0]}
 
 ![Histogramme des requêtes et réponses](histogramme_requetes_reponses.png)
 
 ### Statistiques entre seq, win et ack
-- Nombre de seq: {seqcounter[0]}
-- Nombre de win: {wincounter[0]}
-- Nombre de ack: {ackcounter[0]}
+- Nombre de seq : {seqcounter[0]}
+- Nombre de win : {wincounter[0]}
+- Nombre de ack : {ackcounter[0]}
 '''
 
 # Ouvrir un fichier CSV pour les données extraites du fichier texte non traité
